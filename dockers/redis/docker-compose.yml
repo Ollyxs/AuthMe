@@ -5,8 +5,8 @@ services:
     image: redis:7-bullseye
     restart: always
     volumes:
-      - ~/dockers/redis/_data:/data
-      - ~/dockers/redis/_data/redis.conf:/data/redis.conf
+      - ./_data:/data
+      - ./_data/redis.conf:/data/redis.conf
     command: redis-server /data/redis.conf --requirepass ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
