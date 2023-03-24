@@ -12,7 +12,7 @@ class User(db.Model):
     
 
     def __repr__(self):
-        return '<Cliente: %r %r>' % (self.__id, self.__email)
+        return '<User: %r %r>' % (self.__id, self.__email)
 
     @hybrid_property
     def id(self):
