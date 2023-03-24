@@ -4,11 +4,11 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
     __id = db.Column(db.Integer, primary_key=True)
-    __apellido = db.Column('apellido', db.String(50), nullable=False)
-    __nombre = db.Column('nombre', db.String(50), nullable=False)
+    __last_name = db.Column('last_name', db.String(50), nullable=False)
+    __name = db.Column('name', db.String(50), nullable=False)
     __email = db.Column(db.String(100), unique=True, index=True, nullable=False)
     __password = db.Column(db.String(30), nullable=False)
-    __role = db.Column(db.String(10), nullable=False)
+    __role = db.Column(db.String(30), nullable=False)
     
 
     def __repr__(self):
@@ -27,28 +27,28 @@ class User(db.Model):
         del self.__id
 
     @hybrid_property
-    def apellido(self):
-        return self.__apellido
+    def last_name(self):
+        return self.__last_name
 
-    @apellido.setter
-    def apellido(self, apellido):
-        self.__apellido = apellido
+    @last_name.setter
+    def last_name(self, last_name):
+        self.__last_name = last_name
 
-    @apellido.deleter
-    def apellido(self):
-        del self.__apellido
+    @last_name.deleter
+    def last_name(self):
+        del self.__last_name
 
     @hybrid_property
-    def nombre(self):
-        return self.__nombre
+    def name(self):
+        return self.__name
 
-    @nombre.setter
-    def nombre(self, nombre):
-        self.__nombre = nombre
+    @name.setter
+    def name(self, name):
+        self.__nombre = name
 
-    @nombre.deleter
-    def nombre(self):
-        del self.__nombre
+    @name.deleter
+    def name(self):
+        del self.__name
 
     @hybrid_property
     def email(self):
