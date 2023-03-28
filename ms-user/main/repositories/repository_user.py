@@ -3,7 +3,7 @@ from .. import db
 from .repository_base import Create, Read, Update, Delete
 
 
-class UserRepository(Create, Read, Update, Delete):
+class RepositoryUser(Create, Read, Update, Delete):
     def __init__(self):
         
         self.__model = UserModel   #Agregar nombre igual que en MODELOS
