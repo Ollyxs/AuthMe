@@ -5,7 +5,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 class User(db.Model):
     __id = db.Column(db.Integer, primary_key=True)
     __last_name = db.Column('last_name', db.String(50), nullable=False)
-    __name = db.Column('name', db.String(50), nullable=False)
+    __first_name = db.Column('first_name', db.String(50), nullable=False)
     __email = db.Column(db.String(100), unique=True, index=True, nullable=False)
     __password = db.Column(db.String(30), nullable=False)
     __role = db.Column(db.String(30), nullable=False)
@@ -39,16 +39,16 @@ class User(db.Model):
         del self.__last_name
 
     @hybrid_property
-    def name(self):
-        return self.__name
+    def first_name(self):
+        return self.__first_name
 
-    @name.setter
-    def name(self, name):
-        self.__nombre = name
+    @first_name.setter
+    def first_name(self, first_name):
+        self.__first_name = first_name
 
-    @name.deleter
-    def name(self):
-        del self.__name
+    @first_name.deleter
+    def first_name(self):
+        del self.__first_name
 
     @hybrid_property
     def email(self):
