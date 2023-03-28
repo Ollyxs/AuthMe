@@ -1,3 +1,4 @@
 Flask==2.2.3
 python-dotenv==1.0.0
-pyotp
+pyotp==2.8.0
+flask-mail==0.9.1

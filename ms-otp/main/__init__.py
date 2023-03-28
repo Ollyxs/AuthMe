@@ -1,6 +1,7 @@
-from flask import Flask
 import os
+from flask import Flask
 from dotenv import load_dotenv
+from flask_mail import Mail
 
 
 def create_app():
