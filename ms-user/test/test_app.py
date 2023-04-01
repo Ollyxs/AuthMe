@@ -1,6 +1,7 @@
-import unittest
+import unittest, sys
 from flask import current_app
-from app import create_app, db
+sys.path.append('..')
+from app import create_app
 
 
 class AppTestCase(unittest.TestCase):
@@ -12,5 +13,5 @@ class AppTestCase(unittest.TestCase):
     def tearDown(self):
         self.app_context.pop()
 
-    def test_app_exists(self):
+    def test_app(self):
         self.assertIsNotNone(current_app)
