@@ -19,4 +19,8 @@ class ConnectionTestCase(unittest.TestCase):
 
     def testDbConection(self):
         result = db.session.query(text("'Hello, world'")).one()
+<<<<<<< HEAD
         self.assertEqual(result[0], 'Hello, world')
+=======
+        self.assertEqual(result[0], 'Hello, world')
+>>>>>>> 1232750d32f66dfcf180c3f8214c18316fdb13b7
