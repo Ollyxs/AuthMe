@@ -1,7 +1,7 @@
 import unittest, sys
 sys.path.append('../')
 from app import create_app, db
-from main.models import User
+from main.models import UserModel
 
 
 class UserCrudTestCase(unittest.TestCase):
@@ -22,7 +22,8 @@ class UserCrudTestCase(unittest.TestCase):
             'name': 'john',
             'last_name' : 'wick',
             'email': 'john@example.com',
-            'password': 'testpass'
+            'password': 'testpass',
+            'role': 'admin'
         }
         response = self.client.post('/users', json=user_data)
         self.assertEqual(response.status_code, 201)
@@ -31,9 +32,10 @@ class UserCrudTestCase(unittest.TestCase):
         self.assertEqual(response.json['last_name'], user_data['last_name'])
         self.assertEqual(response.json['email'], user_data['email'])
         self.assertFalse('password' in response.json)
+        self.assertFalse('role' in response.json)
 
     def test_get_user(self):
-        user = User(name='jane', email='jane@example.com', password='testpass', last_name="asd")
+        user = UserModel(name='jane', email='jane@example.com', password='testpass', last_name="asd", role="admin")
         db.session.add(user)
         db.session.commit()
         response = self.client.get(f'/users/{user.id}')
@@ -42,9 +44,11 @@ class UserCrudTestCase(unittest.TestCase):
         self.assertEqual(response.json['last_name'], user.last_name)
         self.assertEqual(response.json['email'], user.email)
         self.assertFalse('password' in response.json)
-
+        self.assertFalse('role' in response.json)
+    
+    
     def test_update_user(self):
-        user = User(name='jane', email='jane@example.com', password='testpass')
+        user = UserModel(name='jane', email='jane@example.com', password='testpass', role='admin', last_name="asd")
         db.session.add(user)
         db.session.commit()
         user_data = {
@@ -57,15 +61,15 @@ class UserCrudTestCase(unittest.TestCase):
         self.assertEqual(response.json['email'], user_data['email'])
         self.assertEqual(response.json['last_name'], user_data['last_name'])
         self.assertFalse('password' in response.json)
-        updated_user = User.query.get(user.id)
+        updated_user = UserModel.query.get(user.id)
         self.assertEqual(updated_user.name, user_data['name'])
         self.assertEqual(updated_user.last_name, user_data['last_name'])
         self.assertEqual(updated_user.email, user_data['email'])
 
     def test_delete_user(self):
-        user = User(name='jane', email='jane@example.com', password='testpass', last_name='asd')
+        user = UserModel(name='jane', email='jane@example.com', password='testpass', last_name='asd', role='admin')
         db.session.add(user)
         db.session.commit()
         response = self.client.delete(f'/users/{user.id}')
         self.assertEqual(response.status_code, 204)
-        self.assertIsNone(User.query.get(user.id))
+        self.assertIsNone(UserModel.query.get(user.id))
