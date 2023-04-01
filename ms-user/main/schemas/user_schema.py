@@ -8,7 +8,7 @@ class UserSchema(Schema):
     __email = fields.Str(required=True)
     __password = fields.String(required=True, validate=validate.Email())
     __role = fields.Str(required=True)
-    
+
     @post_load
     def make_user(self, data, **kwargs):
         return UserModel(**data)

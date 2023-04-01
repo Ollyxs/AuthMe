@@ -1,11 +1,10 @@
 from .. import db
-# from main.models import ClienteModel
+from main.models import UserModel
 from .repository_base import Create, Read, Update, Delete
 
 
 class RepositoryUser(Create, Read, Update, Delete):
     def __init__(self):
-        
         self.__model = UserModel   #Agregar nombre igual que en MODELOS
 
 

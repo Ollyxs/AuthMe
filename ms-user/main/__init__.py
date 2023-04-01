@@ -5,10 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 import pymysql
 from flask_restful import Api
 
-api = Api()
+
 db = SQLAlchemy()
 
 def create_app():
+    api = Api()
     app = Flask(__name__)
     load_dotenv()
 
@@ -23,5 +24,11 @@ def create_app():
     app.config['TESTING'] = True
 
     db.init_app(app)
+
+    import main.controllers as resources
+
+    api.add_resource(resources.UsersResource, '/users')
+    api.add_resource(resources.UserResource, '/user/<int:id>')
     api.init_app(app)
+
     return app
