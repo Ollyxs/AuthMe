@@ -9,7 +9,7 @@ class User(db.Model):
     __email = db.Column(db.String(100), unique=True, index=True, nullable=False)
     __password = db.Column(db.String(30), nullable=False)
     __role = db.Column(db.String(30), nullable=False)
-    
+
 
     def __repr__(self):
         return '<User: %r %r>' % (self.__id, self.__email)
@@ -73,7 +73,7 @@ class User(db.Model):
     @password.deleter
     def password(self):
         self.__password
-    
+
     @hybrid_property
     def role(self):
         return self.__role
@@ -85,5 +85,3 @@ class User(db.Model):
     @role.deleter
     def role(self):
         self.__role
-        
-        
