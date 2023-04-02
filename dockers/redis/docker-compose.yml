@@ -9,7 +9,7 @@ services:
       - ./_data/redis.conf:/data/redis.conf
     command: redis-server /data/redis.conf --requirepass ${REDIS_PASSWORD}
     ports:
-      - "6379:6379"
+      - "6380:6379"
     networks:
       - red
 
