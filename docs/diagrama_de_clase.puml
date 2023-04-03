@@ -16,17 +16,13 @@ class APP{
 
 class SistemaAutenticacion2FA {
   -generarCodigoVerificacion(): string
-}
-
-class ServidorCorreo {
   +enviarCorreo(): boolean
 }
 
 Usuario --> APP
 APP --> SistemaAutenticacion2FA
-SistemaAutenticacion2FA --> ServidorCorreo
 SistemaAutenticacion2FA --> APP
-ServidorCorreo --> Usuario
+SistemaAutenticacion2FA --> Usuario
 
 
 @enduml
