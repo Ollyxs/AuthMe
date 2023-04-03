@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+      <meta charset="UTF-8">
+  </head>
+  <style>
+      .main{
+        border:1px solid black;
+        padding:30px;
+        background-color:white;
+        margin:20px;
+      }
+      body{
+        background-color: lightgray;
+      }
+      .services{
+        background-color:#94beff;
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+        padding:10px;
+        border:1px solid black;
+        width:250px;
+      }
+      h1{
+        font-weight: bold;
+        font-size:25px;
+        color:#001d62;
+      }
+
+      .button {
+        background-color:#3680f2;
+      	border-radius:2px;
+      	border:1px solid black;
+      	display:inline-block;
+      	color:#ffffff;
+      	font-size:13px;
+      	padding:6px 24px;
+      	text-decoration:none;
+        margin-right:3px;
+
+      }
+
+  </style>
+  <body style="background-color: lightgray;">
+  <br/>
+  <div class="main" style="border: 1px solid black;padding: 30px;background-color: white;margin: 50px;">
+    <h1 style="font-weight: bold;font-size: 25px;color: #001d62;">Bienvenido {{user.name}}! </h1>
+    <div class="services" style="background-color: #94beff;box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);padding: 10px;border: 1px solid black;width: 250px;">
+      <p>Tu código de autenticación es:</p>
+        <ul>
+            <a>{{user.code}}</a>
+        </ul>
+    </div>
+    <h5 style="font-weight: bold;font-size: 25px;color: #001d62;">Gracias por usar nuestros servicio de autenticación </h5>
+    <br>
+</div>
+
+</body>
+</html>

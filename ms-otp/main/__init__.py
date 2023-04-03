@@ -3,7 +3,7 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_mail import Mail
 from flask_restful import Api
-# from redis import Redis
+from redis import Redis
 
 api = Api()
 mailsender = Mail()
@@ -12,7 +12,7 @@ def create_app():
     app = Flask(__name__)
     load_dotenv()
 
-    # redis = Redis(host='redis', port=6379)
+    redis = Redis(host = os.getenv('REDIS_HOST'), port = os.getenv('REDIS_PORT'))
     # counter = str(redis.get('hits'),'ascii')
     # print("This webpage has been viewed "+counter+" time(s)")
 
