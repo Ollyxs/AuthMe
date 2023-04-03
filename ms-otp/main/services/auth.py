@@ -1,4 +1,3 @@
-import time
 import pyotp
 
 print("Generar una clave secreta para el usuario")
