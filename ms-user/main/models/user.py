@@ -1,13 +1,15 @@
 from .. import db
 from sqlalchemy.ext.hybrid import hybrid_property
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
+    __tablename__ = 'users'
     __id = db.Column(db.Integer, primary_key=True)
-    __last_name = db.Column('last_name', db.String(50), nullable=False)
-    __first_name = db.Column('first_name', db.String(50), nullable=False)
+    __name = db.Column(db.String(50), nullable=False)
+    __last_name = db.Column(db.String(50), nullable=False)
     __email = db.Column(db.String(100), unique=True, index=True, nullable=False)
-    __password = db.Column(db.String(30), nullable=False)
+    __password = db.Column(db.String(128), nullable=False)
     __role = db.Column(db.String(30), nullable=False)
 
 
@@ -39,16 +41,16 @@ class User(db.Model):
         del self.__last_name
 
     @hybrid_property
-    def first_name(self):
-        return self.__first_name
+    def name(self):
+        return self.__name
 
-    @first_name.setter
-    def first_name(self, first_name):
-        self.__first_name = first_name
+    @name.setter
+    def first_name(self, name):
+        self.__name = name
 
-    @first_name.deleter
-    def first_name(self):
-        del self.__first_name
+    @name.deleter
+    def name(self):
+        del self.__name
 
     @hybrid_property
     def email(self):
@@ -63,16 +65,14 @@ class User(db.Model):
         del self.__email
 
     @hybrid_property
-    def password(self):
-        return self.__activado
+    def password(self,):
+        return self.__password
 
-    @password.setter
-    def password(self, password):
-        self.__password = password
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
 
-    @password.deleter
-    def password(self):
-        self.__password
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
     @hybrid_property
     def role(self):
