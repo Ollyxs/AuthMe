@@ -13,8 +13,6 @@ def create_app():
     load_dotenv()
 
     redis = Redis(host = os.getenv('REDIS_HOST'), port = os.getenv('REDIS_PORT'))
-    # counter = str(redis.get('hits'),'ascii')
-    # print("This webpage has been viewed "+counter+" time(s)")
 
     app.config['TESTING'] = True
 

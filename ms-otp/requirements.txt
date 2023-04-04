@@ -2,3 +2,5 @@ Flask==2.2.3
 python-dotenv==1.0.0
 pyotp==2.8.0
 flask-mail==0.9.1
+Flask-RESTful==0.3.9
+redis==3.5.3
