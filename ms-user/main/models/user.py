@@ -5,12 +5,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
-    __id = db.Column(db.Integer, primary_key=True)
-    __name = db.Column(db.String(50), nullable=False)
-    __last_name = db.Column(db.String(50), nullable=False)
-    __email = db.Column(db.String(100), unique=True, index=True, nullable=False)
-    __password = db.Column(db.String(128), nullable=False)
-    __role = db.Column(db.String(30), nullable=False)
+    __id = db.Column('id', db.Integer, primary_key=True)
+    __name = db.Column('name', db.String(50), nullable=False)
+    __last_name = db.Column('last_name', db.String(50), nullable=False)
+    __email = db.Column('email', db.String(100), unique=True, index=True, nullable=False)
+    __password = db.Column('password', db.String(128), nullable=False)
+    __role = db.Column('role',  db.String(30), nullable=False)
 
 
     def __repr__(self):

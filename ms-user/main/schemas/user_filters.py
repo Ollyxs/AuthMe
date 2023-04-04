@@ -5,7 +5,7 @@ class UserFilters():
     def __init__(self, user):
         self.__user = user
         self.__dict_filters = {"id": self.__filtro_por_id,
-                            "first_name": self.__filtro_por_nombre,
+                            "name": self.__filtro_por_nombre,
                             "last_name": self.__filtro_por_apellido,
                             "email": self.__filtro_por_email
                             }

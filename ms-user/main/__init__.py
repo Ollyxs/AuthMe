@@ -21,13 +21,12 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{U}:{PW}@{H}:{P}/{D}'
     app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
     app.config['TESTING'] = True
-    # app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'execute': 'CREATE DATABASE IF NOT EXISTS authme'}
     db.init_app(app)
 
-    # import main.controllers as resources
+    import main.controllers as resources
 
-    # api.add_resource(resources.UsersResource, 'users')
-    # api.add_resource(resources.UserResource, '/user/<int:id>')
+    api.add_resource(resources.UsersResource, '/users')
+    api.add_resource(resources.UserResource, '/user/<int:id>')
     api.init_app(app)
 
     return app
