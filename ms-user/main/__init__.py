@@ -23,10 +23,10 @@ def create_app():
     app.config['TESTING'] = True
     db.init_app(app)
 
-    import main.controllers as resources
+    # import main.controllers as resources
 
-    api.add_resource(resources.UsersResource, '/users')
-    api.add_resource(resources.UserResource, '/user/<int:id>')
-    api.init_app(app)
+    # api.add_resource(resources.UsersResource, '/users')
+    # api.add_resource(resources.UserResource, '/user/<int:id>')
+    # api.init_app(app)
 
     return app
