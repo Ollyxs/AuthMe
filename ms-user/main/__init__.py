@@ -1,12 +1,15 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
-import pymysql
 from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
+import pymysql
+
 
 api = Api()
 db = SQLAlchemy()
+jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
@@ -23,10 +26,17 @@ def create_app():
     app.config['TESTING'] = True
     db.init_app(app)
 
-    # import main.controllers as resources
+    import main.controllers as resources
 
-    # api.add_resource(resources.UsersResource, '/users')
-    # api.add_resource(resources.UserResource, '/user/<int:id>')
-    # api.init_app(app)
+    api.add_resource(resources.UsersResource, '/users')
+    api.add_resource(resources.UserResource, '/user/<int:id>')
+    api.init_app(app)
+
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))
+    jwt.init_app(app)
+
+    from main.auth import routes
+    app.register_blueprint(routes.auth)
 
     return app
