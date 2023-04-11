@@ -9,8 +9,10 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth.route('/login', methods=['POST'])
 def login():
+    print("entra")
+    print(request.get_json())
     user = db.session.query(UserModel).filter(UserModel.email == request.get_json().get("email")).first_or_404()
-    if user.validate_pass(request.get_json().get("password")):
+    if user.check_password(request.get_json().get("password")):
         access_token = create_access_token(identity=user)
         data = {
             'id': str(user.id),
@@ -24,7 +26,6 @@ def login():
 @auth.route('/register', methods=['POST'])
 def register():
     user = user_schema.load(request.get_json())
-    print(user)
     exists = db.session.query(UserModel).filter(UserModel.email == user.email).scalar() is not None
     if exists:
         return 'Duplicated mail', 409
