@@ -3,11 +3,11 @@ import redis
 from datetime import datetime
 
 
-redis_client = redis.Redis(host='redis', port=6379)
+redis_client = redis.Redis(host='localhost', port=6380, password='qwerty')
 secret_key = datetime.now()
 
 
-def generate_otp():
+def generate_otp(secret_key):
     #Genera un código OTP
     totp = pyotp.TOTP(secret_key)
     code = totp.now()
@@ -15,7 +15,7 @@ def generate_otp():
     redis_client.setex(code, 300, 'valid')
     return code
 
-def validate_otp(code: str) -> bool:
+def validate_otp(secret_key, code: str) -> bool:
     #Valida un código OTP dado
     totp = pyotp.TOTP(secret_key)
     return totp.verify(code, datetime.now())
