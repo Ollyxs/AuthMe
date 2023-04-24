@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 import pymysql
 
 
@@ -25,6 +26,10 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
     app.config['TESTING'] = True
     db.init_app(app)
+    
+    cors = CORS(app, support_credentials=True)
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    cors = CORS(app, resources={r"*": {"origins": "*"}})
 
     import main.controllers as resources
 
