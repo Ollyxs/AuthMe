@@ -5,6 +5,7 @@ from smtplib import SMTPException
 
 def sendMail(to, subject, template, **kwargs):
     #Configuracion del mail
+    print("llega")
     msg = Message(subject, sender=current_app.config['FLASKY_MAIL_SENDER'], recipients=to)
     try:
         #Creación del cuerpo del mensaje
