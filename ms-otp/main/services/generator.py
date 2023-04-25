@@ -32,7 +32,8 @@ def is_code_valid(secret_key: str) -> bool:
 def validate_otp(secret_key: str) -> bool:
     #Valida un código OTP dado
     if is_code_valid(secret_key):
-        totp = pyotp.TOTP(secret_key)
+        secret_key_b32 = base64.b32encode(secret_key.encode('ascii'))
+        totp = pyotp.TOTP(secret_key_b32)
         return totp.verify(secret_key)
     else:
         return False
