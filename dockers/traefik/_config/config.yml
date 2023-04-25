@@ -3,6 +3,8 @@ http:
     traefik:
       rule: "Host(`traefik.authme.localhost`)"
       service: "api@internal"
+      #middlewares:
+       #- latency-check
       tls:
         domains:
           - main: "authme.localhost"
