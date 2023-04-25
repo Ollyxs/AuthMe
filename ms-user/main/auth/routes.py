@@ -1,11 +1,13 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, current_app, json
 from .. import db
 from main.models import UserModel
-from main.schemas import UserSchema
+from main.schemas import UserSchema, OtpSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 user_schema = UserSchema()
+otp_schema = OtpSchema()
 auth = Blueprint('auth', __name__, url_prefix='/auth')
+otp = Blueprint('otp', __name__, url_prefix='/otp')
 
 @auth.route('/login', methods=['POST'])
 def login():
@@ -37,3 +39,16 @@ def register():
             db.session.rollback()
             return str(e), 409
         return user_schema.dump(user), 201
+
+@otp.route
+def code():
+    data = {}
+    r = request.get(current_app.config["API_URL"]+'/code',
+                    headers = {"content-type":"application/json"},
+                    data = json.dumps(data))
+    print(r.data)
+    print(data)
+    user = json.loads(r.text)
+    user_code = otp_schema.load(request.get_json())
+    codigo = user + " " + user_code
+    return codigo
