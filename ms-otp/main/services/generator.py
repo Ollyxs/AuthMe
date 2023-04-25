@@ -4,14 +4,14 @@ import redis
 import base64
 from dotenv import load_dotenv
 from datetime import datetime
-from main import create_app
+from main import get_redis
 
 load_dotenv()
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
 
-redis_client = create_app.redis()
+redis_client = get_redis()
 secret_key = str(datetime.now())
 
 
@@ -25,18 +25,20 @@ def generate_otp(secret_key):
     redis_client.setex(secret_key, 300, code)
     return code
 
-def is_code_valid(secret_key: str) -> bool:
-    #Verifica si un código aún es válido
-    return redis_client.get(secret_key) is not None
+# TODO Funcione para usar a futuro
+# ? Esto debería estar en el otro microservico?
+# def is_code_valid(secret_key: str) -> bool:
+#     #Verifica si un código aún es válido
+#     return redis_client.get(secret_key) is not None
 
-def validate_otp(secret_key: str) -> bool:
-    #Valida un código OTP dado
-    if is_code_valid(secret_key):
-        secret_key_b32 = base64.b32encode(secret_key.encode('ascii'))
-        totp = pyotp.TOTP(secret_key_b32)
-        return totp.verify(secret_key)
-    else:
-        return False
+# def validate_otp(secret_key: str) -> bool:
+#     #Valida un código OTP dado
+#     if is_code_valid(secret_key):
+#         secret_key_b32 = base64.b32encode(secret_key.encode('ascii'))
+#         totp = pyotp.TOTP(secret_key_b32)
+#         return totp.verify(secret_key)
+#     else:
+#         return False
 
 
-print(generate_otp(secret_key))
+# print(generate_otp(secret_key, redis_client))
