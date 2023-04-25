@@ -1,0 +1,7 @@
+Bienvenido!
+
+Tu código de autenticación es:
+
+{{value}}
+
+Gracias por usar nuestro servicio de autenticación
