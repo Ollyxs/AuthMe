@@ -21,10 +21,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik=true"
       - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
-      # - "traefik.http.routers.ms-otp.service=otp"
-      - "traefik.http.routers.ms-otp.rule=Host(`otp.com`)"
-      - "traefik.http.routers.ms-otp.middlewares=circuitbreaker@docker"
-      - "traefik.http.services.ms-otp.loadbalancer.server.port=80"
+     # - "traefik.http.routers.authme.service=otp"
+     # - "traefik.http.routers.authme.rule=Host(`otp.com`)"
+     # - "traefik.http.routers.authme.middlewares=circuitbreaker@docker"
+      - "traefik.http.services.authme.loadbalancer.server.port=80"
       
 
 networks:
