@@ -17,21 +17,25 @@ secret_key = str(datetime.now())
 
 def generate_otp(secret_key):
     #Codificar la secret key en Base32
-    secret_key = base64.b32encode(secret_key.encode('ascii'))
+    secret_key_b32 = base64.b32encode(secret_key.encode('ascii'))
     #Genera un código OTP
-    totp = pyotp.TOTP(secret_key)
+    totp = pyotp.TOTP(secret_key_b32)
     code = totp.now()
     #Inserta el código en Redis y configura el tiempo de expiración
-    redis_client.setex('valid', 300, code)
+    redis_client.setex(secret_key, 300, code)
     return code
 
-def validate_otp(secret_key, code: str) -> bool:
-    #Valida un código OTP dado
-    totp = pyotp.TOTP(secret_key)
-    return totp.verify(code, datetime.now())
-
-def is_code_valid(code: str) -> bool:
+def is_code_valid(secret_key: str) -> bool:
     #Verifica si un código aún es válido
-    return redis_client.get(code) is not None
+    return redis_client.get(secret_key) is not None
+
+def validate_otp(secret_key: str) -> bool:
+    #Valida un código OTP dado
+    if is_code_valid(secret_key):
+        totp = pyotp.TOTP(secret_key)
+        return totp.verify(secret_key)
+    else:
+        return False
+
 
 print(generate_otp(secret_key))
