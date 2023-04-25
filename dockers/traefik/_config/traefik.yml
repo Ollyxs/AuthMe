@@ -15,6 +15,16 @@ providers:
     filename: /etc/traefik/config.yml
     watch: true
 
+middlewares:
+  latency-check:
+    circuitbreaker:
+      expression: LatencyAtQuantileMS(50.0) > 100
+      notifiers:
+        mail:
+          delay: 1m
+          emails:
+            - admin@example.com
+
 log:
   level: INFO
   format: common
