@@ -18,6 +18,13 @@ services:
         volumes:
             - ./_data:/var/lib/mysql
         restart: always
+        labels:
+          - "traefik.enable=true"
+          - "traefik.tcp.routers.mysql.entrypoints=mysql"
+          - "traefik.http.routers.mysql.rule=Host(`mysql.authme.localhost`)"
+          - "traefik.tcp.services.mysql.loadbalancer.server.port=3306" #no escalar
+          - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+          - "traefik.docker.network=red"
 networks:
     red:
         external: true
