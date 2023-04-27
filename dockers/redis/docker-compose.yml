@@ -12,6 +12,11 @@ services:
       - "6380:6379"
     networks:
       - red
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.redis.loadbalancer.server.port=6379"
+      - "traefik.http.routers.redis.rule=Host(`redis.authme.localhost`)"
+      - "traefik.docker.network=red"
 
 networks:
     red:

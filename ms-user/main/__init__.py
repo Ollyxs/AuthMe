@@ -23,6 +23,8 @@ def create_app():
     D = os.getenv('MYSQL_DATABASE')
     H = os.getenv('MYSQL_HOST')
     P = os.getenv('MYSQL_PORT')
+    
+    print("-------", P)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{U}:{PW}@{H}:{P}/{D}'
     app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
@@ -37,7 +39,7 @@ def create_app():
     api.init_app(app)
 
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = os.getenv('JWT_ACCESS_TOKEN_EXPIRES')
     jwt.init_app(app)
 
     from main.auth import routes

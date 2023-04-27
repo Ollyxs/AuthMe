@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  reverse-proxy:
+  traefik:
     image: traefik:v2.9.10
     container_name: traefik
     restart: unless-stopped
@@ -20,12 +20,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik=true"
-      - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
-     # - "traefik.http.routers.authme.service=otp"
-     # - "traefik.http.routers.authme.rule=Host(`otp.com`)"
-     # - "traefik.http.routers.authme.middlewares=circuitbreaker@docker"
-      - "traefik.http.services.authme.loadbalancer.server.port=80"
-      
+      - "traefik.http.routers.traefik.rule=Host(`traefik.authme.localhost`)"
 
 networks:
   red:
