@@ -1,0 +1,17 @@
+@startuml "Diagrama de Secuencia"
+actor User
+actor App
+participant "Sistema de Autenticación" as Auth
+participant "Servicio de Correo Electrónico" as MailSender
+
+User -> App: Introduce Credenciales
+App -> App: Verifica Credenciales
+App -> Auth: Solicitar código
+Auth -> MailSender: Genera Código de Verificación
+App -> User: Solicita Código de Verificación
+MailSender -> User: Envía Código de Verificación
+User -> App: Ingresa Código de Verificación
+Auth -> App: Envia Código de Verificación
+App -> App: Comprobar Código de Verificación
+App -> User: Autenticación Exitosa
+@enduml

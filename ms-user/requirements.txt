@@ -1,0 +1,10 @@
+Flask==2.2.3
+python-dotenv==1.0.0
+PyMySQL==1.0.2
+Flask-SQLAlchemy==3.0.3
+Flask-RESTful==0.3.9
+flask-marshmallow==0.14.0
+Flask-JWT-Extended==4.4.4
+marshmallow-sqlalchemy==0.29.0
+requests==2.28.2
+redis==3.5.3

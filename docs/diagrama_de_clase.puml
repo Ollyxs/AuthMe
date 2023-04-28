@@ -1,0 +1,28 @@
+@startuml
+class Usuario {
+  -username: string
+  -password: string
+  -email: string
+  -verificationCode: string
+}
+
+class APP{
+  +login(): boolean
+  +logout(): boolean
+  +verificationCode(): boolean 
+  +solicitarCodigoVerificacion(): boolean
+
+  }
+
+class SistemaAutenticacion2FA {
+  -generarCodigoVerificacion(): string
+  +enviarCorreo(): boolean
+}
+
+Usuario --> APP
+APP --> SistemaAutenticacion2FA
+SistemaAutenticacion2FA --> APP
+SistemaAutenticacion2FA --> Usuario
+
+
+@enduml

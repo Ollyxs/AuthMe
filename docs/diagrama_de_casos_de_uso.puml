@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+actor User
+actor App
+actor AuthSystem
+actor MailSender
+rectangle "Autenticación 2FA" as Auth {
+  User --> (Introducir Credenciales)
+  App --> (Solicitar Código de Verificación)
+  AuthSystem --> (Generar Código de Verificación)
+  AuthSystem --> (Verificar Código de Verificación)
+  AuthSystem --> (Autenticación Exitosa)
+  MailSender --> (Enviar Código de Verificación)
+  User --> (Verificar Código de Verificación)
+  App --> (Autenticación Exitosa)
+}
+@enduml

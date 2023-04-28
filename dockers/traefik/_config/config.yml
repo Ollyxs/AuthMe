@@ -1,0 +1,18 @@
+http:
+  routers:
+    traefik:
+      rule: "Host(`traefik.authme.localhost`)"
+      service: "api@internal"
+      tls:
+        domains:
+          - main: "authme.localhost"
+            sans:
+              - "*.authme.localhost"
+          - main: "authme.local"
+            sans:
+              - "*.authme.local"
+
+tls:
+  certificates:
+    - certFile: "/etc/certs/local-cert.pem"
+      keyFile: "/etc/certs/local-key.pem"
