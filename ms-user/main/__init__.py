@@ -15,6 +15,9 @@ def create_app():
     app = Flask(__name__)
     load_dotenv()
 
+    redis = get_redis()
+    app.config['REDIS'] = redis
+
     U = os.getenv('MYSQL_USER')
     PW = os.getenv('MYSQL_PASSWORD')
     D = os.getenv('MYSQL_DATABASE')
@@ -24,6 +27,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{U}:{PW}@{H}:{P}/{D}'
     app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
     app.config['TESTING'] = True
+    app.config['API_URL'] = os.getenv('API_URL')
     db.init_app(app)
 
     import main.controllers as resources
@@ -40,3 +44,12 @@ def create_app():
     app.register_blueprint(routes.auth)
 
     return app
+
+def get_redis():
+    from redis import Redis
+
+    REDIS_HOST = os.getenv('REDIS_HOST')
+    REDIS_PORT = os.getenv('REDIS_PORT')
+    REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+
+    return Redis(host = REDIS_HOST, port = REDIS_PORT, password = REDIS_PASSWORD)
