@@ -7,14 +7,13 @@ services:
         #     - "7000:7000"
         # container_name: ms-user
         environment:
-            - DB_HOST=db
-            - DB_PORT=3306
-            - DB_DATABASE=authme
-            - DB_USER=root
-            - DB_PASSWORD=mariposa
-            - JWT_SECRET_KEY = 'clave-secreta-de-la-app'
-            - JWT_ACCESS_TOKEN_EXPIRES = 3600
-
+            - DB_HOST=${DB_HOST}
+            - DB_PORT=${DB_PORT}
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USER=${DB_USER}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - JWT_SECRET_KEY =${JWT_SECRET_KEY}
+            - JWT_ACCESS_TOKEN_EXPIRES =${JWT_ACCESS_TOKEN_EXPIRES}
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.ms-user.rule=Host(`ms-otp.authme.localhost`) && Path(`/user`)"
@@ -24,7 +23,7 @@ services:
             - "traefik.http.routers.ms-user.middlewares=ms-user-circuitbreaker"
             - "traefik.docker.network=red"
         networks:
-            - traefik-network
+            - red
             
         volumes:
             - ./main:/app/main
@@ -32,5 +31,5 @@ services:
 
 
 networks:
-    traefik-network:
+    red:
         external: true

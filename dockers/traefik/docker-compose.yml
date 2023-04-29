@@ -3,6 +3,14 @@ version: '3'
 services:
   traefik:
     image: traefik:v2.9.10
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      #- "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      #- "--certificatesresolvers.myresolver.acme.email=youremail@example.com"
+      #- "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     container_name: traefik
     restart: unless-stopped
     security_opt:
