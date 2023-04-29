@@ -18,6 +18,8 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.ms-otp.rule=Host(`ms-user.order.localhost`)"
+            - "traefik.http.middlewares.ms-otp-circuitbreaker.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+            - "traefik.http.routers.ms-otp.middlewares=ms-otp-circuitbreaker"
             - "traefik.http.routers.ms-otp.tls=true"
             - "traefik.http.services.ms-otp.loadbalancer.server.port=7000"
             - "traefik.docker.network=red"
