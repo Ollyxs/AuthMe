@@ -17,18 +17,20 @@ services:
 
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.ms-user.rule=Host(`ms-user.order.localhost`)"
+            - "traefik.http.routers.ms-user.rule=Host(`ms-otp.authme.localhost`) && Path(`/user`)"
             - "traefik.http.routers.ms-user.tls=true"
-            - "traefik.http.services.ms-user.loadbalancer.server.port=7000"
+            - "traefik.http.services.ms-user.loadbalancer.server.port=5000"
+            - "traefik.http.middlewares.ms-user-circuitbreaker.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+            - "traefik.http.routers.ms-user.middlewares=ms-user-circuitbreaker"
             - "traefik.docker.network=red"
+        networks:
+            - traefik-network
             
         volumes:
             - ./main:/app/main
             - ./app.py:/app/app.py
 
-        networks:
-            - red
 
 networks:
-    red:
+    traefik-network:
         external: true
