@@ -3,6 +3,8 @@ from .. import db
 from main.models import UserModel
 from main.schemas import UserSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+import requests
+from flask_retry import retry
 
 user_schema = UserSchema()
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -37,3 +39,4 @@ def register():
             db.session.rollback()
             return str(e), 409
         return user_schema.dump(user), 201
+

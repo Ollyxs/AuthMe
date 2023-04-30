@@ -1,6 +1,7 @@
 from flask import request, jsonify, json, Blueprint, current_app
 from main.services import generate_otp, sendMail
 from main import create_app
+from flask_retry import retry
 
 otp = Blueprint('otp', __name__, url_prefix='/otp')
 

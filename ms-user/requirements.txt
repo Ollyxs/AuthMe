@@ -6,3 +6,4 @@ Flask-RESTful==0.3.9
 flask-marshmallow==0.14.0
 Flask-JWT-Extended==4.4.4
 marshmallow-sqlalchemy==0.29.0
+Flask-Retry

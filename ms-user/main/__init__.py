@@ -5,6 +5,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 import pymysql
+from flask_retry import retry
 
 
 api = Api()
@@ -13,6 +14,7 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
+    retry = Retry(app)
     load_dotenv()
 
     U = os.getenv('MYSQL_USER')
