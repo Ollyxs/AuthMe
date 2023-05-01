@@ -14,6 +14,7 @@ services:
             - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme.localhost`)"
             - "traefik.http.routers.ms-otp.tls=true"
             - "traefik.http.services.ms-otp.loadbalancer.server.port=6000"
+            - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
             - "traefik.docker.network=red"
             
         volumes:

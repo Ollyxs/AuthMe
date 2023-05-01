@@ -22,8 +22,7 @@ services:
           - "traefik.enable=true"
           - "traefik.tcp.routers.mysql.entrypoints=mysql"
           - "traefik.http.routers.mysql.rule=Host(`mysql.authme.localhost`)"
-          - "traefik.tcp.services.mysql.loadbalancer.server.port=3306" #no escalar
-          - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+          - "traefik.tcp.services.mysql.loadbalancer.server.port=3307" #no escalar
           - "traefik.docker.network=red"
 networks:
     red:

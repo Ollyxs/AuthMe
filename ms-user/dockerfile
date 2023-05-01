@@ -2,15 +2,15 @@
 FROM python:3.10-slim-bullseye
 
 
-ENV FLASK_ENV=production 
+ENV FLASK_DEBUG=production 
 ENV PROD_DATABASE_URI=""
 ENV PYTHONUNBUFFERED=1
 ENV PATH=$PATH:/home/flaskapp/.local/bin
-ENV DB_HOST = 
-ENV DB_USER =
-ENV DB_PASSWORD =
-ENV DB_NAME =
-ENV DB_PORT =
+ENV MYSQL_HOST = ${MYSQL_HOST}
+ENV MYSQL_USER = ${MYSQL_USER}
+ENV MYSQL_PASSWORD = ${MYSQL_PASSWORD}
+ENV MYSQL_DATABASE = ${MYSQL_DATABASE}
+ENV MYSQL_PORT = ${MYSQL_PORT}
 
 #crea usuario
 RUN useradd --create-home --home-dir /home/flaskapp flaskapp

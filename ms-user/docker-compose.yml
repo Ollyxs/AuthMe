@@ -7,11 +7,11 @@ services:
         #     - "7000:7000"
         # container_name: ms-user
         environment:
-            - DB_HOST=${DB_HOST}
-            - DB_PORT=${DB_PORT}
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_USER=${DB_USER}
-            - DB_PASSWORD=${DB_PASSWORD}
+            - MYSQL_HOST=${MYSQL_HOST}
+            - MYSQL_PORT=${MYSQL_PORT}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - JWT_SECRET_KEY =${JWT_SECRET_KEY}
             - JWT_ACCESS_TOKEN_EXPIRES =${JWT_ACCESS_TOKEN_EXPIRES}
         labels:
@@ -19,7 +19,8 @@ services:
             - "traefik.http.routers.ms-user.rule=Host(`ms-otp.authme.localhost`) && Path(`/user`)"
             - "traefik.http.routers.ms-user.tls=true"
             - "traefik.http.services.ms-user.loadbalancer.server.port=5000"
-            - "traefik.http.middlewares.ms-user-circuitbreaker.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+            - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+            #- "traefik.http.middlewares.ms-user-circuitbreaker.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
             - "traefik.http.routers.ms-user.middlewares=ms-user-circuitbreaker"
             - "traefik.docker.network=red"
         networks:
