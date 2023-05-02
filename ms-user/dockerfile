@@ -1,20 +1,5 @@
-#obtenemos la imagen de un kernel de Linux con python
-FROM python:3.10-slim-bullseye
-ENV FLASK_ENV=production
-ENV PROD_DATABASE_URI=""
-ENV PYTHONUNBUFFERED=1
-ENV PATH=$PATH:/home/flaskapp/.local/bin
-
-#crea usuario
-RUN useradd --create-home --home-dir /home/flaskapp flaskapp
-
-#seleccionar la carpeta de usuario
-WORKDIR /home/flaskapp
-#instala dependencias del sistema
-RUN apt-get update
-RUN apt-get install -y curl gcc g++ libffi-dev libssl-dev build-essential default-mysql-client python3-mysqldb libmariadb-dev
-RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
-RUN rm -rf /var/lib/apt/lists/*
+#obtenemos la imagen de base
+FROM authme-base:1.0.0
 
 USER flaskapp
 RUN mkdir app
