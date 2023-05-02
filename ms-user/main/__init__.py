@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 import pymysql
 import re
+from datetime import timedelta
 
 
 api = Api()
@@ -20,15 +21,15 @@ def create_app():
     app.config['REDIS'] = redis
 
     U = os.getenv('MYSQL_USER')
-    U = U.replace('\\', '')
+    # U = U.replace('\\', '')
     PW = os.getenv('MYSQL_PASSWORD')
-    PW = PW.replace('\\', '')
+    # PW = PW.replace('\\', '')
     D = os.getenv('MYSQL_DATABASE')
-    D = D.replace('\\', '')
+    # D = D.replace('\\', '')
     H = os.getenv('MYSQL_HOST')
-    H = H.replace('\\', '')
+    # H = H.replace('\\', '')
     P = os.getenv('MYSQL_PORT')
-    P = re.sub(r'\D', '', P)
+    # P = re.sub(r'\D', '', P)
 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{U}:{PW}@{H}:{P}/{D}'
     app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
@@ -43,7 +44,11 @@ def create_app():
     api.init_app(app)
 
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = os.getenv('JWT_ACCESS_TOKEN_EXPIRES')
+    # JWTATE = os.getenv('JWT_ACCESS_TOKEN_EXPIRES')
+    # print(JWTATE)
+    # JWTATE = JWTATE.replace('\\', '')
+    # print(JWTATE)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=3600)
     jwt.init_app(app)
 
     from main.auth import routes

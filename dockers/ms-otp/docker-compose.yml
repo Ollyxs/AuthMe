@@ -8,18 +8,19 @@ services:
     networks:
       - red
     environment:
-      - REDIS_HOST=\${REDIS_HOST}
-      - REDIS_PORT=\${REDIS_PORT}
-      - REDIS_PASSWORD=\${REDIS_PASSWORD}
-      - MAIL_SERVER=\${MAIL_SERVER}
-      - MAIL_PORT=\${MAIL_PORT}
-      - MAIL_USE_TLS=\${MAIL_USE_TLS}
-      - MAIL_USERNAME=\${MAIL_USERNAME}
-      - MAIL_PASSWORD=\${MAIL_PASSWORD}
-      - FLASKY_MAIL_SENDER=\${FLASKY_MAIL_SENDER}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - MAIL_SERVER=${MAIL_SERVER}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USE_TLS=${MAIL_USE_TLS}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - FLASKY_MAIL_SENDER=${FLASKY_MAIL_SENDER}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme`)"
+      - "traefik.http.routers.ms-otp.tls=true"
       - "traefik.http.routers.ms-otp.entrypoints=https"
       - "traefik.http.middlewares.ms-otp-cb.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
       - "traefik.http.routers.ms-otp.middlewares=ms-otp-cb"
