@@ -16,12 +16,14 @@ services:
             - JWT_ACCESS_TOKEN_EXPIRES =${JWT_ACCESS_TOKEN_EXPIRES}
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.ms-user.rule=Host(`ms-otp.authme.localhost`) && Path(`/user`)"
+            
+            - "traefik.http.routers.ms-user.rule=Host(`ms-user.authme.localhost`) && Path(`/user`)"
             - "traefik.http.routers.ms-user.tls=true"
-            - "traefik.http.services.ms-user.loadbalancer.server.port=5000"
+            - "traefik.http.services.ms-user.loadbalancer.server.port=6000"
             - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
             #- "traefik.http.middlewares.ms-user-circuitbreaker.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
-            - "traefik.http.routers.ms-user.middlewares=ms-user-circuitbreaker"
+            
+            #- "traefik.http.routers.ms-user.middlewares=ms-user-circuitbreaker"
             - "traefik.docker.network=red"
         networks:
             - red

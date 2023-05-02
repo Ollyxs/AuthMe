@@ -29,6 +29,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik=true"
       - "traefik.http.routers.traefik.rule=Host(`traefik.authme.localhost`)"
+      - "traefik.docker.network=red"
+      
 
 networks:
   red:

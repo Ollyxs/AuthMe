@@ -15,9 +15,6 @@ providers:
     filename: /etc/traefik/config.yml
     watch: true
 
-
-
-
 log:
   level: INFO
   format: common
@@ -32,3 +29,15 @@ entryPoints:
           scheme: https
   https:
     address: ":443"
+
+  redis:
+    address: ":6379"
+
+  mysql:
+    address: ":3306"
+
+  ms-user:
+    address: ":6000"
+  
+  ms-otp:
+    address: ":5000"

@@ -5,15 +5,12 @@ services:
         build: .
         # ports: 
         #     - "7000:7000"
-        # container_name: ms-user
-        command: redis-server /data/redis.conf --requirepass ${REDIS_PASSWORD}
-        ports:
-            - "6380:6379"    
+        # container_name: ms-user   
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme.localhost`)"
             - "traefik.http.routers.ms-otp.tls=true"
-            - "traefik.http.services.ms-otp.loadbalancer.server.port=6000"
+            - "traefik.http.services.ms-otp.loadbalancer.server.port=5000"
             - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
             - "traefik.docker.network=red"
             

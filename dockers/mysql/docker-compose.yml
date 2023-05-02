@@ -20,9 +20,9 @@ services:
         restart: always
         labels:
           - "traefik.enable=true"
-          - "traefik.tcp.routers.mysql.entrypoints=mysql"
           - "traefik.http.routers.mysql.rule=Host(`mysql.authme.localhost`)"
           - "traefik.tcp.services.mysql.loadbalancer.server.port=3307" #no escalar
+          - "traefik.tcp.routers.mysql.entrypoints=mysql"
           - "traefik.docker.network=red"
 networks:
     red:

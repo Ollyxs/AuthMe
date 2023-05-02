@@ -12,6 +12,11 @@ http:
           - main: "authme.local"
             sans:
               - "*.authme.local"
+  middlewares:
+    retry:
+      retries:
+        attempts: 3
+        
 
 tls:
   certificates:
