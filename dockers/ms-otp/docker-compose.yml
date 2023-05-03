@@ -19,9 +19,9 @@ services:
       - FLASKY_MAIL_SENDER=${FLASKY_MAIL_SENDER}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme`)"
+      - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme.localhost`)"
       - "traefik.http.routers.ms-otp.tls=true"
-      - "traefik.http.routers.ms-otp.entrypoints=https"
+      - "traefik.http.routers.ms-otp.entrypoints=http,https"
       - "traefik.http.middlewares.ms-otp-cb.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
       - "traefik.http.routers.ms-otp.middlewares=ms-otp-cb"
 

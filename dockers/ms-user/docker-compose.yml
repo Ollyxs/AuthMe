@@ -22,7 +22,7 @@ services:
       - JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ms-user.rule=Host(`ms-user.authme`)"
+      - "traefik.http.routers.ms-user.rule=Host(`ms-user.authme.localhost`)"
       - "traefik.http.routers.ms-user.tls=true"
       - "traefik.http.routers.ms-user.entrypoints=http,https,mysql,redis"
       - "traefik.http.middlewares.ms-user-cb.circuitbreaker.expression=NetworkErrorRatio() > 0.5"

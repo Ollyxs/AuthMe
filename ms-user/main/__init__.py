@@ -44,10 +44,6 @@ def create_app():
     api.init_app(app)
 
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-    # JWTATE = os.getenv('JWT_ACCESS_TOKEN_EXPIRES')
-    # print(JWTATE)
-    # JWTATE = JWTATE.replace('\\', '')
-    # print(JWTATE)
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=3600)
     jwt.init_app(app)
 

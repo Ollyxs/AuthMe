@@ -10,15 +10,16 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 5000:5000
-      - 6000:6000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./_config/traefik.yml:/etc/traefik/traefik.yml:ro
       - ./_config/config.yml:/etc/traefik/config.yml:ro
       - ./_certs:/etc/certs:ro
     networks:
-      - red
+      red:
+        aliases:
+          - ms-opt.authme.localhost
+          - ms-user.authme.localhost
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik=true"
