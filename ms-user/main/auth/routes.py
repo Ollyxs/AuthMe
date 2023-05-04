@@ -19,7 +19,7 @@ def login():
             'access_token': access_token
         }
         data_otp = {"clave": user.email}
-        r = requests.post('http://ms-otp-ms-otp-1/otp/code',
+        r = requests.post(current_app.config["API_URL"]+'otp/code',
                     headers = {"content-type":"application/json"},
                     data = json.dumps(data_otp),
                     verify=False)

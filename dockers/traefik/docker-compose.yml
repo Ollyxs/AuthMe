@@ -18,7 +18,7 @@ services:
     networks:
       red:
         aliases:
-          - ms-opt.authme.localhost
+          - ms-otp.authme.localhost
           - ms-user.authme.localhost
     labels:
       - "traefik.enable=true"
