@@ -1,22 +1,13 @@
 #obtenemos la imagen de base
 FROM authme-base:1.0.0
 
-ENV API_URL=${API_URL}
-ENV REDIS_HOST=${REDIS_HOST}
-ENV REDIS_PORT=${REDIS_PORT}
 ENV REDIS_PASSWORD=${REDIS_PASSWORD}
-ENV MYSQL_USER=${MYSQL_USER}
-ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
-ENV MYSQL_DATABASE=${MYSQL_DATABASE}
-ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-ENV MYSQL_HOST=${MYSQL_HOST}
-ENV MYSQL_PORT=${MYSQL_PORT}
-ENV JWT_SECRET_KEY=${JWT_SECRET_KEY}
-ENV JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
+
 USER flaskapp
 RUN mkdir app
 #copia la carpeta del proyecto a la imagen
 COPY ./main ./main
+
 COPY ./app.py .
 
 ADD requirements.txt ./requirements.txt
@@ -25,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install gevent gunicorn==20.1.0
 
 #puerto por el que escucha la imagen
-EXPOSE 6000
+EXPOSE 5000
 
 #HEALTHCHECK --interval=10s --timeout=10s --start-period=55s
 #CMD curl -f --retry 10 --max-time 15 --retry-delay 10 --retry-max-time 60 "http://localhost:5000/api/v1/health" || exit 1

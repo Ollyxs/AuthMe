@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  ms-user:
+    build:
+      context: ../../ms-user
+      dockerfile: Dockerfile
+    networks:
+      - red
+    environment:
+      - API_URL=${API_URL}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ms-user.rule=Host(`ms-user.authme.localhost`)"
+      - "traefik.http.routers.ms-user.tls=true"
+      - "traefik.http.routers.ms-user.entrypoints=http,https,mysql,redis"
+      - "traefik.http.services.ms-user.loadbalancer.server.port=6000"
+      - "traefik.http.middlewares.ms-user-cb.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+      - "traefik.http.routers.ms-user.middlewares=ms-user-cb"
+
+networks:
+  red:
+    external: true
