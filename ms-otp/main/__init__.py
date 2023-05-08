@@ -3,7 +3,7 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_mail import Mail
 from flask_restful import Api
-from flask_retry import retry
+
 
 
 api = Api()
@@ -11,7 +11,7 @@ mailsender = Mail()
 
 def create_app():
     app = Flask(__name__)
-    retry = Retry(app)
+    
     load_dotenv()
 
     redis = get_redis()
