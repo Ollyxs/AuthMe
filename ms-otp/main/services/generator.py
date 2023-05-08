@@ -22,7 +22,7 @@ def generate_otp(secret_key):
     totp = pyotp.TOTP(secret_key_b32)
     code = totp.now()
     #Inserta el código en Redis y configura el tiempo de expiración
-    redis_client.setex(secret_key, 300, code)
+    redis_client.setex(secret_key, 60, code)
     return code
 
 # TODO Funcione para usar a futuro
