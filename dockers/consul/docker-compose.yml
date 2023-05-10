@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  consul:
+    image: consul:1.15
+    restart: always
+    ports:
+      - "8500:8500"
+      - "8300:8300"
+    volumes:
+      - ./config:/consul/config
+      - ./data:/consul/data
+    networks:
+      - red
+    command: agent -bind 0.0.0.0 -disable-host-node-id=true
+
+networks:
+  red:
+    external: True
