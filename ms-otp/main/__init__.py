@@ -3,14 +3,22 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_mail import Mail
 from flask_restful import Api
+from flask_cosul import Consul
 
 
 api = Api()
 mailsender = Mail()
+consul = Consul()
 
 def create_app():
     app = Flask(__name__)
     load_dotenv()
+
+    consul.init_app(app)
+    consul.register_service(
+        name='otp',
+        interval='10s',
+        httpcheck='http://ms-otp.authme.localhost:5000/otp')
 
     redis = get_redis()
     app.config['REDIS'] = redis
