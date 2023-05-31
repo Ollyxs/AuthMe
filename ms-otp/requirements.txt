@@ -4,4 +4,4 @@ pyotp==2.8.0
 flask-mail==0.9.1
 Flask-RESTful==0.3.9
 redis==3.5.3
-flask-consulate
+py-consulate-ms==1.0.0
