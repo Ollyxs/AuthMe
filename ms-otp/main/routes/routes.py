@@ -13,3 +13,10 @@ def code():
     except Exception as e:
         return str(e), 409
     return value, 200
+
+@otp.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    data = {
+        'status': 'up'
+    }
+    return jsonify(data), 200

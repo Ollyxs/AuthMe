@@ -63,3 +63,10 @@ def validate():
         return "Codigo valido", 201
     else:
         return "Código invalido", 404
+    
+@auth.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    data = {
+        'status': 'up'
+    }
+    return jsonify(data), 200
