@@ -17,14 +17,14 @@ services:
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - FLASKY_MAIL_SENDER=${FLASKY_MAIL_SENDER}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme.localhost`)"
-      - "traefik.http.routers.ms-otp.tls=true"
-      - "traefik.http.routers.ms-otp.entrypoints=http,https,redis"
-      - "traefik.http.services.ms-otp.loadbalancer.server.port=5000"
-      - "traefik.http.middlewares.ms-otp-cb.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
-      - "traefik.http.routers.ms-otp.middlewares=ms-otp-cb"
+      # labels:
+      #   - "traefik.enable=true"
+      #   - "traefik.http.routers.ms-otp.rule=Host(`ms-otp.authme.localhost`)"
+      #   - "traefik.http.routers.ms-otp.tls=true"
+      #   - "traefik.http.routers.ms-otp.entrypoints=http,https,redis"
+      #   - "traefik.http.services.ms-otp.loadbalancer.server.port=5000"
+      #   - "traefik.http.middlewares.ms-otp-cb.circuitbreaker.expression=NetworkErrorRatio() > 0.5"
+      #   - "traefik.http.routers.ms-otp.middlewares=ms-otp-cb"
 
 networks:
   red:
