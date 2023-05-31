@@ -3,6 +3,7 @@ version: '3'
 services:
   consul:
     image: consul:1.15
+    container_name: consul
     restart: always
     ports:
       - "8500:8500"
@@ -12,8 +13,13 @@ services:
       - ./data:/consul/data
     networks:
       - red
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.consul.rule=Host(`consul.authme.localhost`)"
+      - "traefik.http.routers.consul.tls=true"
+      - "traefik.http.services.consul.loadbalancer.server.port=8500"
     command: agent -bind 0.0.0.0 -disable-host-node-id=true
-
+    
 networks:
   red:
     external: True
