@@ -6,6 +6,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 import requests
 from retrying import retry
 import random
+from datetime import datetime
 import time
 
 
@@ -27,7 +28,8 @@ def login():
              "POST",
              current_app.config['API_URL'] + 'otp/code',
              headers={"content-type": "application/json"},
-             data=json.dumps(data_otp)
+             data=json.dumps(data_otp), 
+             verify=False
          )
         return data, 200
     else:
@@ -75,10 +77,10 @@ def validate():
         return "Código invalido", 404
 
 @retry(stop_max_attempt_number=10, wait_exponential_multiplier=1000, wait_exponential_max=10000)
-def make_request(method, url, headers=None, data=None):
+def make_request(method, url, headers=None, data=None, verify=None):
     print("Intentando conectar...")
     if method == "POST":
-        response = requests.post(url, headers=headers, data=data)
+        response = requests.post(url, headers=headers, data=data, verify=verify)
     else:
         raise ValueError("Invalid method")
     if response.status_code != 200:
@@ -96,7 +98,7 @@ def health_check():
 
 @auth.route('/vegeta', methods=['GET'])
 def vegeta():
-    random.seed(time.now)
+    random.seed(datetime.now)
     time.sleep(random.randint(0, 20))
     value = random.randint(0, 149)
     if value in range(0, 49):
