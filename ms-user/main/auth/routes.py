@@ -90,4 +90,4 @@ def health_check():
         response = make_request("http://localhost:5000/api/v1/health")
         return jsonify({"status": "UP", "response": response.json()})
     except Exception as e:
-        return jsonify({"status": "DOWN", "error": str(e)})
+        return jsonify({"status": "DOWN", "error ": str(e)})
