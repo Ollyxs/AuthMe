@@ -4,6 +4,8 @@ from main.models import UserModel
 from main.schemas import UserSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import requests
+from retrying import retry
+
 
 user_schema = UserSchema()
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -19,15 +21,20 @@ def login():
             'access_token': access_token
         }
         data_otp = {"clave": user.email}
-        r = requests.post(current_app.config["API_URL"]+'otp/code',
-                    headers = {"content-type":"application/json"},
-                    data = json.dumps(data_otp),
-                    verify=False)
+        r = make_request(
+             "POST",
+             current_app.config['API_URL'] + 'otp/code',
+             headers={"content-type": "application/json"},
+             data=json.dumps(data_otp)
+         )
         return data, 200
     else:
         return 'Incorrect password', 401
+    
+
 
 @auth.route('/register', methods=['POST'])
+@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000)
 def register():
     user = user_schema.load(request.get_json())
     exists = db.session.query(UserModel).filter(UserModel.email == user.email).scalar() is not None
@@ -43,6 +50,7 @@ def register():
         return user_schema.dump(user), 201
 
 @auth.route('/validate', methods=['POST'])
+@retry(stop_max_attempt_number=6, wait_exponential_multiplier=1000, wait_exponential_max=10000)
 @jwt_required()
 def validate():
     iduser = get_jwt_identity()
@@ -63,3 +71,23 @@ def validate():
         return "Codigo valido", 201
     else:
         return "Código invalido", 404
+
+@retry(stop_max_attempt_number=10, wait_exponential_multiplier=1000, wait_exponential_max=10000)
+def make_request(method, url, headers=None, data=None):
+    print("Intentando conectar...")
+    if method == "POST":
+        response = requests.post(url, headers=headers, data=data)
+    else:
+        raise ValueError("Invalid method")
+    if response.status_code != 200:
+        raise Exception(f"Request failed with status code {response.status_code}")
+    return response
+
+
+@auth.route("/health-check-users")
+def health_check():
+    try:
+        response = make_request("http://localhost:5000/api/v1/health")
+        return jsonify({"status": "UP", "response": response.json()})
+    except Exception as e:
+        return jsonify({"status": "DOWN", "error ": str(e)})
