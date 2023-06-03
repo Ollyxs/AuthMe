@@ -5,6 +5,8 @@ from main.schemas import UserSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import requests
 from retrying import retry
+import random
+import time
 
 
 user_schema = UserSchema()
@@ -91,3 +93,15 @@ def health_check():
         return jsonify({"status": "UP", "response": response.json()})
     except Exception as e:
         return jsonify({"status": "DOWN", "error ": str(e)})
+
+@auth.route('/vegeta', methods=['GET'])
+def vegeta():
+    random.seed(time.now)
+    time.sleep(random.randint(0, 20))
+    value = random.randint(0, 149)
+    if value in range(0, 49):
+        return "Success:", 200
+    elif value in range(50, 99):
+        return "Not Found:", 404
+    elif value in range(100, 149):
+        return "Server Error:", 500
