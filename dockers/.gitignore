@@ -2,3 +2,5 @@ redis/.env
 redis/_data
 mysql/.env
 mysql/_data
+ms-otp/.env
+ms-user/.env

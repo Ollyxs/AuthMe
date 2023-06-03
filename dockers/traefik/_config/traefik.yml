@@ -29,3 +29,9 @@ entryPoints:
           scheme: https
   https:
     address: ":443"
+
+  redis:
+    address: ":6379"
+
+  mysql:
+    address: ":3306"
