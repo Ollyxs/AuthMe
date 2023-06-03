@@ -5,11 +5,13 @@ from flask_mail import Mail
 from flask_restful import Api
 
 
+
 api = Api()
 mailsender = Mail()
 
 def create_app():
     app = Flask(__name__)
+    
     load_dotenv()
 
     redis = get_redis()
