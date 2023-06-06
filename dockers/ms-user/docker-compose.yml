@@ -7,19 +7,19 @@ services:
       dockerfile: Dockerfile
     networks:
       - red
-    environment:
-      - API_URL=${API_URL}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_PORT=${MYSQL_PORT}
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
+    # environment:
+    #   - API_URL=${API_URL}
+    #   - REDIS_HOST=${REDIS_HOST}
+    #   - REDIS_PORT=${REDIS_PORT}
+    #   - REDIS_PASSWORD=${REDIS_PASSWORD}
+    #   - MYSQL_USER=${MYSQL_USER}
+    #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    #   - MYSQL_DATABASE=${MYSQL_DATABASE}
+    #   - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    #   - MYSQL_HOST=${MYSQL_HOST}
+    #   - MYSQL_PORT=${MYSQL_PORT}
+    #   - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    #   - JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
     # labels:
     #   - "traefik.enable=true"
     #   - "traefik.http.routers.ms-user.rule=Host(`ms-user.authme.localhost`)"
