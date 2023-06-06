@@ -27,7 +27,14 @@ def make_request(url):
 @otp.route("/health-check-otp")
 def health_check():
     try:
-        response = make_request("https://example.com/microservice/health")
+        response = make_request("https://ms-user.authme.localhost/auth/healthcheck")
         return jsonify({"status": "UP", "response": response.json()})
     except Exception as e:
         return jsonify({"status": "DOWN", "error": str(e)})
+    
+@otp.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    data = {
+        'status': 'up'
+    }
+    return jsonify(data), 200

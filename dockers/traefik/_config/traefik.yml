@@ -15,8 +15,21 @@ providers:
     filename: /etc/traefik/config.yml
     watch: true
 
+  consulCatalog:
+    refreshInterval: 10s
+    serviceName: "traefik"
+    endpoint:
+      address: "consul:8500"
+      scheme: "http"
+      tls:
+        insecureSkipVerify: true
+    exposedByDefault: true
+    connectAware: true
+    watch: true
+    defaultRule: "Host(`{{ normalize .Name }}.authme.localhost`)"
+
 log:
-  level: INFO
+  level: DEBUG
   format: common
 
 entryPoints:

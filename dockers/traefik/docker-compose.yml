@@ -20,9 +20,12 @@ services:
         aliases:
           - ms-otp.authme.localhost
           - ms-user.authme.localhost
+    extra_hosts:
+      - "host.docker.internal:172.18.0.1"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik=true"
+      
 networks:
   red:
     external: true
