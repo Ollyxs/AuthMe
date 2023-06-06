@@ -22,7 +22,6 @@ COPY ./app.py .
 ADD requirements.txt ./requirements.txt
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install gevent gunicorn==20.1.0
 
 #puerto por el que escucha la imagen
 EXPOSE 6000

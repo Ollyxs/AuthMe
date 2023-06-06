@@ -18,3 +18,4 @@ RUN apt-get update
 RUN apt-get install -y curl gcc g++ libffi-dev libssl-dev build-essential default-mysql-client python3-mysqldb libmariadb-dev
 RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 RUN rm -rf /var/lib/apt/lists/*
+RUN pip install gevent gunicorn==20.1.0

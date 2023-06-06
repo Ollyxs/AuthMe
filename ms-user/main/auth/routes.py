@@ -91,7 +91,7 @@ def make_request(method, url, headers=None, data=None, verify=None):
 @auth.route("/health-check-users")
 def health_check():
     try:
-        response = make_request("http://localhost:5000/api/v1/health")
+        response = make_request("https://ms-otp.authme.localhost/otp/healthcheck")
         return jsonify({"status": "UP", "response": response.json()})
     except Exception as e:
         return jsonify({"status": "DOWN", "error ": str(e)})
@@ -107,3 +107,10 @@ def vegeta():
         return "Not Found:", 404
     elif value in range(100, 149):
         return "Server Error:", 500
+    
+@auth.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    data = {
+        'status': 'up'
+    }
+    return jsonify(data), 200
