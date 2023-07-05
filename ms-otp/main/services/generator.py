@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 from datetime import datetime
 from main import get_redis
 
-load_dotenv()
-REDIS_HOST = os.getenv('REDIS_HOST')
-REDIS_PORT = os.getenv('REDIS_PORT')
-REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+# load_dotenv()
+# REDIS_HOST = os.getenv('REDIS_HOST')
+# REDIS_PORT = os.getenv('REDIS_PORT')
+# REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
 
 redis_client = get_redis()
 secret_key = str(datetime.now())

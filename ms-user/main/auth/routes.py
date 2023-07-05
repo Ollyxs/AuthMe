@@ -28,14 +28,12 @@ def login():
              "POST",
              current_app.config['API_URL'] + 'otp/code',
              headers={"content-type": "application/json"},
-             data=json.dumps(data_otp), 
+             data=json.dumps(data_otp),
              verify=False
          )
         return data, 200
     else:
         return 'Incorrect password', 401
-    
-
 
 @auth.route('/register', methods=['POST'])
 @retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000)
@@ -87,7 +85,6 @@ def make_request(method, url, headers=None, data=None, verify=None):
         raise Exception(f"Request failed with status code {response.status_code}")
     return response
 
-
 @auth.route("/health-check-users")
 def health_check():
     try:
@@ -98,19 +95,23 @@ def health_check():
 
 @auth.route('/vegeta', methods=['GET'])
 def vegeta():
-    random.seed(datetime.now)
+    random.seed(datetime.now())
     time.sleep(random.randint(0, 20))
     value = random.randint(0, 149)
     if value in range(0, 49):
-        return "Success:", 200
+        return "Success.", 200
     elif value in range(50, 99):
-        return "Not Found:", 404
+        return "Not Found.", 404
     elif value in range(100, 149):
-        return "Server Error:", 500
-    
+        return "Server Error.", 500
+
 @auth.route('/healthcheck', methods=['GET'])
 def healthcheck():
     data = {
         'status': 'up'
     }
     return jsonify(data), 200
+
+@auth.route('/servererror', methods=['GET'])
+def servererror():
+    return "Server Error.", 500

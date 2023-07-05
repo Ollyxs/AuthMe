@@ -15,7 +15,7 @@ kv = consul.kv
 
 def create_app():
     app = Flask(__name__)
-    
+
     load_dotenv()
 
     addr = socket.gethostbyname(socket.gethostname())
