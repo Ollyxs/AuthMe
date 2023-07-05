@@ -4,14 +4,14 @@ import redis
 import time
 from datetime import datetime, timedelta
 sys.path.append('../')
-from main.services.generator import generate_otp#, validate_otp, is_code_valid
+from main.services.generator import generate_otp
 
 class TestOTP(unittest.TestCase):
 
     def setUp(self):
         # Conectar a Redis
         self.redis_client = redis.Redis(host='localhost', port=6380, password='qwerty')
-        
+
         # Generar una clave secreta
         self.secret_key = pyotp.random_base32()
         self.secret_key2 = pyotp.random_base32()
@@ -21,19 +21,19 @@ class TestOTP(unittest.TestCase):
         # Eliminar la clave de la base de datos de Redis
         self.redis_client.delete(self.code)
 
-        # Tests that the Redis key generated for each OTP code is unique. 
-    
+        # Tests that the Redis key generated for each OTP code is unique.
+
     def test_generate_otp(self):
         # Generar un código OTP y almacenarlo en Redis
         self.code = generate_otp(self.secret_key)
-        
+
         # Comprobar que el código tiene una longitud de 6 dígitos
         self.assertEqual(len(self.code), 6)
-        
+
         # Comprobar que el código se ha almacenado en Redis
         self.assertEqual(int(self.redis_client.get(self.secret_key)), int(self.code))
 
-    #     # Tests that a valid secret key and correct OTP code returns True. 
+    #     # Tests that a valid secret key and correct OTP code returns True.
     # def test_valid_secret_key_and_correct_otp(self):
     #     # Happy path test for valid secret key and correct OTP code
     #     secret_key = pyotp.random_base32()
@@ -41,7 +41,7 @@ class TestOTP(unittest.TestCase):
     #     code = totp.now()
     #     assert validate_otp(secret_key, code) == True
 
-    #     # Tests that a valid secret key and incorrect OTP code returns False. 
+    #     # Tests that a valid secret key and incorrect OTP code returns False.
     # def test_valid_secret_key_and_incorrect_otp(self):
     #     # Happy path test for valid secret key and incorrect OTP code
     #     secret_key = pyotp.random_base32()
@@ -49,14 +49,14 @@ class TestOTP(unittest.TestCase):
     #     code = "123456"
     #     assert validate_otp(secret_key, code) == False
 
-    #     # Tests that an invalid secret key returns False. 
+    #     # Tests that an invalid secret key returns False.
     # def test_invalid_secret_key(self):
     #     # Edge case test for invalid secret key
     #     secret_key = "invalid_secret_key"
     #     code = "123456"
     #     assert validate_otp(secret_key, code) == False
 
-    #     # Tests that an invalid OTP code returns False. 
+    #     # Tests that an invalid OTP code returns False.
     # def test_invalid_otp_code(self):
     #     # Edge case test for invalid OTP code
     #     secret_key = pyotp.random_base32()
@@ -64,7 +64,7 @@ class TestOTP(unittest.TestCase):
     #     code = "invalid_otp_code"
     #     assert validate_otp(secret_key, code) == False
 
-    #     # Tests that an expired OTP code returns False. 
+    #     # Tests that an expired OTP code returns False.
     # def test_expired_otp_code(self):
     #     # Edge case test for expired OTP code
     #     secret_key = pyotp.random_base32()
@@ -96,13 +96,13 @@ class TestOTP(unittest.TestCase):
         otp2 = generate_otp(self.secret_key2)
         assert otp1 != otp2
 
-        # Tests that the OTP code stored in Redis has a 5-minute expiration time. 
+        # Tests that the OTP code stored in Redis has a 5-minute expiration time.
     def test_generate_otp_expiration_time(self):
         # Generate an OTP code and check that it expires after 5 minutes
         otp = generate_otp(self.secret_key)
         assert self.redis_client.ttl(otp) <= 60
 
-        # Tests that the generate_otp function always returns a string. 
+        # Tests that the generate_otp function always returns a string.
     def test_generate_otp_returns_string(self):
         # Check that the generate_otp function always returns a string
         otp = generate_otp(self.secret_key)
