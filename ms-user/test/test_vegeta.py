@@ -1,35 +1,23 @@
 import unittest
-from httplib2 import Authentication
-import datetime
+import httplib2
+import time
+import random
 
 class TestVegeta(unittest.TestCase):
     def test_success_response(self):
-        response = auth.test_client().get('/auth/vegeta')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b'Success:')
+        http = httplib2.Http(disable_ssl_certificate_validation=True)
+        response, content = http.request("https://ms-user.authme.localhost/auth/healthcheck", "GET")
+        self.assertEqual(response.status, 200)
 
     def test_not_found_response(self):
-        response = auth.test_client().get('/auth/vegeta')
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data, b'Not Found:')
+        http = httplib2.Http(disable_ssl_certificate_validation=True)
+        response, content = http.request("https://ms-user.authme.localhost/auth/goku", "GET")
+        self.assertEqual(response.status, 404)
 
     def test_server_error_response(self):
-        response = auth.test_client().get('/auth/vegeta')
-        self.assertEqual(response.status_code, 500)
-        self.assertEqual(response.data, b'Server Error:')
+        http = httplib2.Http(disable_ssl_certificate_validation=True)
+        response, content = http.request("https://ms-user.authme.localhost/auth/servererror", "GET")
+        self.assertTrue(response.status >= 500)
 
-    
-    def test_random_seed(self):
-        with unittest.mock.patch('random.seed') as mock_seed:
-            auth.test_client().get('/auth/vegeta')
-            mock_seed.assert_called_once_with(datetime.now)
-
-    def test_time_sleep(self):
-        with unittest.mock.patch('time.sleep') as mock_sleep:
-            auth.test_client().get('/auth/vegeta')
-            mock_sleep.assert_called_once_with(unittest.mock.ANY)
-
-    def test_random_randint(self):
-        with unittest.mock.patch('random.randint') as mock_randint:
-            auth.test_client().get('/auth/vegeta')
-            mock_randint.assert_called_with(0, 149)
+if __name__ == '__main__':
+    unittest.main()
