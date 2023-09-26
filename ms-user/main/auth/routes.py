@@ -8,6 +8,7 @@ from retrying import retry
 import random
 from datetime import datetime
 import time
+import html
 
 
 user_schema = UserSchema()
@@ -49,7 +50,8 @@ def register():
         except Exception as e:
             db.session.rollback()
             return str(e), 409
-        return user_schema.dump(user), 201
+        value = html.escape(user_schema.dump(user))
+        return value, 201
 
 @auth.route('/validate', methods=['POST'])
 @retry(stop_max_attempt_number=6, wait_exponential_multiplier=1000, wait_exponential_max=10000)
@@ -78,6 +80,7 @@ def validate():
 def make_request(method, url, headers=None, data=None, verify=None):
     print("Intentando conectar...")
     if method == "POST":
+        # deepcode ignore SSLVerificationBypass: <using local certificates>
         response = requests.post(url, headers=headers, data=data, verify=verify)
     else:
         raise ValueError("Invalid method")
